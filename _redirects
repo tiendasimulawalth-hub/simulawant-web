@@ -1,0 +1,3 @@
+# Redirigir www.simulawant.com y simulawant.com a simulawant.me
+https://simulawant.com/* https://simulawant.me/:splat 301!
+https://www.simulawant.com/* https://simulawant.me/:splat 301!
