@@ -19,16 +19,14 @@
         .container {
             text-align: center;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
         }
         .logo {
-            width: 100px;
-            height: 100px;
-            background-image: url('https://example.com/quantum-logo.png'); /* Reemplaza con la URL de tu logotipo */
-            background-size: cover;
-            border-radius: 50%;
+            width: 200px;
+            height: 200px;
             margin: 0 auto 20px;
         }
         h1 {
@@ -38,11 +36,12 @@
         p {
             font-size: 1.2em;
             line-height: 1.6;
+            margin-bottom: 20px;
         }
         .cta {
             display: inline-block;
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 10px 30px;
             background-color: #007BFF;
             color: #fff;
             text-decoration: none;
@@ -56,7 +55,17 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo"></div>
+        <div class="logo">
+            <svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="10" width="180" height="180" rx="20" fill="#0047AB"/>
+                <line x1="50" y1="50" x2="150" y2="50" stroke="#FFFFFF" stroke-width="5"/>
+                <line x1="50" y1="50" x2="50" y2="150" stroke="#FFFFFF" stroke-width="5"/>
+                <line x1="150" y1="50" x2="150" y2="150" stroke="#FFFFFF" stroke-width="5"/>
+                <line x1="50" y1="150" x2="150" y2="150" stroke="#FFFFFF" stroke-width="5"/>
+                <path d="M50,100 Q75,50 100,100 T150,100" stroke="#FFFFFF" stroke-width="5" fill="transparent"/>
+                <text x="50%" y="190" text-anchor="middle" font-size="24" fill="#FFFFFF">QFH</text>
+            </svg>
+        </div>
         <h1>Quantum-Finance Hub</h1>
         <p>Explora el futuro de las finanzas con nuestra plataforma de simulación cuántica. Optimiza tus inversiones con tecnología de punta.</p>
         <a href="#" class="cta">Comenzar Ahora</a>
