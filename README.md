@@ -1,8 +1,6 @@
 # Quantum-Finance Hub
 
-[![Logo](http://example.com/quantum-logo.png)](http://example.com/quantum-logo.png)
-
-Una plataforma de simulación cuántica aplicada a estrategias financieras personalizadas para inversores minoristas.
+![Logo](https://example.com/quantum-logo.png)
 
 ## Descripción
 
