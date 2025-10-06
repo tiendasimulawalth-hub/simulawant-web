@@ -3,113 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulawant | Quantum-Finance Hub - El Futuro de Tus Inversiones</title>
+    <title>Quantum-Finance Hub</title>
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%); color: #fff; overflow-x: hidden; }
-        header { position: fixed; top: 0; width: 100%; background: rgba(0,0,0,0.8); padding: 1rem 0; z-index: 1000; transition: background 0.3s; }
-        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        nav ul { list-style: none; display: flex; gap: 2rem; margin: 0; }
-        nav a { color: #fff; text-decoration: none; transition: color 0.3s; }
-        nav a:hover { color: #8b5cf6; }
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%238b5cf6" opacity="0.1"/></svg>') repeat; animation: pulse 4s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        h1 { font-size: 4rem; margin: 0; background: linear-gradient(45deg, #fff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: glow 2s ease-in-out infinite alternate; }
-        @keyframes glow { from { text-shadow: 0 0 20px #8b5cf6; } to { text-shadow: 0 0 30px #8b5cf6, 0 0 40px #8b5cf6; } }
-        .subtitle { font-size: 1.5rem; margin: 1rem 0; opacity: 0.9; }
-        .cta { padding: 1rem 2rem; background: linear-gradient(45deg, #8b5cf6, #3b82f6); border: none; border-radius: 50px; color: #fff; font-size: 1.2rem; cursor: pointer; transition: transform 0.3s; }
-        .cta:hover { transform: scale(1.05); }
-        section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .feature { background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; }
-        .feature:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3); }
-        .search-section { background: rgba(0,0,0,0.3); padding: 3rem; border-radius: 20px; margin: 2rem 0; text-align: center; }
-        #searchInput { padding: 1rem; width: 70%; max-width: 400px; border: 2px solid #8b5cf6; border-radius: 50px; background: transparent; color: #fff; font-size: 1rem; }
-        #searchBtn { padding: 1rem 2rem; background: #8b5cf6; border: none; border-radius: 50px; color: #fff; cursor: pointer; margin-left: 1rem; }
-        #searchResults { margin-top: 2rem; display: none; }
-        footer { text-align: center; padding: 2rem; background: rgba(0,0,0,0.5); }
-        @media (max-width: 768px) { h1 { font-size: 2.5rem; } #searchInput { width: 90%; margin-bottom: 1rem; } #searchBtn { margin-left: 0; } }
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            height: 100vh;
+            transition: filter 0.5s;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .header {
+            text-align: center;
+            padding: 150px 20px 80px;
+            position: relative;
+            z-index: 1;
+            transform: perspective(1000px);
+            transition: transform 0.5s;
+        }
+        .header h1 {
+            font-size: 5em;
+            margin: 0;
+            text-shadow: 0 0 10px #c0c0c0, 0 0 20px #ffff00;
+            animation: electricGlow 1.5s infinite alternate;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 2px;
+            color: transparent;
+            background: linear-gradient(45deg, #c0c0c0, #ffff00, #00ffcc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            -webkit-font-smoothing: antialiased;
+            backface-visibility: hidden;
+            will-change: opacity;
+            display: inline-block;
+        }
+        .header p {
+            font-size: 1.8em;
+            max-width: 800px;
+            margin: 30px auto;
+            opacity: 0;
+            animation: slideUpFade 2s ease forwards 0.7s;
+        }
+        .nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            gap: 20px;
+        }
+        .nav a {
+            color: #c0c0c0;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s, text-shadow 0.3s, transform 0.3s;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+        .nav a:hover {
+            color: #ffff00;
+            text-shadow: 0 0 15px #ffff00;
+            transform: scale(1.1);
+        }
+        .content {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            min-height: 70vh;
+            perspective: 1000px;
+        }
+        .card {
+            background: linear-gradient(135deg, rgba(192, 192, 192, 0.2), rgba(255, 255, 0, 0.1));
+            border: 3px solid #c0c0c0;
+            border-radius: 25px;
+            padding: 30px;
+            margin: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.6s ease, box-shadow 0.6s ease;
+            cursor: pointer;
+            perspective: 1000px;
+            transform: rotateX(0deg) rotateY(0deg) translateZ(0);
+            box-shadow: 0 5px 15px rgba(192, 192, 192, 0.3);
+        }
+        .card:hover {
+            transform: rotateX(15deg) rotateY(15deg) scale(1.15) translateZ(20px);
+            box-shadow: 0 15px 50px rgba(255, 255, 0, 0.6), 0 0 30px rgba(0, 255, 204, 0.6);
+        }
+        .card-inner {
+            transition: transform 1s;
+            transform-style: preserve-3d;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background: rgba(10, 10, 10, 0.9);
+            border-radius: 20px;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, rgba(192, 192, 192, 0.1), rgba(10, 10, 50, 0.9));
+        }
+        .card h3 {
+            margin: 0 0 20px;
+            color: #ffff00;
+            font-size: 1.4em;
+            text-transform: uppercase;
+        }
+        .card p {
+            font-size: 1em;
+            color: #ddd;
+            line-height: 1.5;
+        }
+        .cta {
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 1;
+            animation: float 3s infinite ease-in-out;
+        }
+        .cta button {
+            background: linear-gradient(45deg, #c0c0c0, #ffff00, #00ffcc);
+            border: none;
+            color: #0a0a0a;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+            font-weight: bold;
+            text-shadow: 0 0 5px #fff;
+        }
+        .cta button:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 0 40px #ffff00, 0 0 80px #00ffcc;
+            background: linear-gradient(45deg, #ffff00, #c0c0c0, #00ffcc);
+        }
+        @keyframes electricGlow {
+            from { text-shadow: 0 0 10px #c0c0c0, 0 0 20px #ffff00; }
+            to { text-shadow: 0 0 30px #c0c0c0, 0 0 50px #ffff00; }
+        }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(70px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div>Simulawant</div>
-            <ul>
-                <li><a href="#about">Sobre Nosotros</a></li>
-                <li><a href="#features">Beneficios</a></li>
-                <li><a href="#contact">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section class="hero">
+    <canvas id="particles"></canvas>
+    <div class="nav">
+        <a href="#home">Inicio</a>
+        <a href="#services">Servicios</a>
+        <a href="#contact">Contacto</a>
+    </div>
+    <div class="header" id="home">
         <h1>Quantum-Finance Hub</h1>
-        <p class="subtitle">Simula y optimiza tus inversiones con computación cuántica. Democratizamos el futuro para inversores como tú.</p>
-        <button class="cta" onclick="scrollToSection('contact')">Únete a la Beta</button>
-    </section>
-
-    <section id="about">
-        <h2>¿Por Qué Simulawant?</h2>
-        <p>Fusión inédita de simulación cuántica, IA y finanzas conductuales. Personaliza tu cartera en tiempo real, con precisión que deja atrás a las herramientas tradicionales.</p>
-    </section>
-
-    <section id="features">
-        <h2>Beneficios Clave</h2>
-        <div class="features">
-            <div class="feature">
-                <h3>Precisión Cuántica</h3>
-                <p>Algoritmos como Grover para buscar activos óptimos en segundos.</p>
-            </div>
-            <div class="feature">
-                <h3>Personalización Ética</h3>
-                <p>Incorpora tu perfil de riesgo y valores – nada genérico.</p>
-            </div>
-            <div class="feature">
-                <h3>Acceso Democrático</h3>
-                <p>Herramientas de élite, al alcance de inversores minoristas.</p>
+        <p>Conquista el infinito financiero con la fuerza cuántica que redefine el destino de tu riqueza.</p>
+    </div>
+    <div class="content" id="services">
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Inversiones Cuánticas</h3>
+                    <p>Viaja por universos de rentabilidad.</p>
+                </div>
+                <div class="card-back">
+                    <h3>Detalles</h3>
+                    <p>Simulaciones cuánticas multidimensionales que optimizan tu portafolio en paralelo.</p>
+                </div>
             </div>
         </div>
-    </section>
-
-    <section id="search" class="search-section">
-        <h2>Prueba una Simulación Rápida</h2>
-        <p>Busca un activo (ej: "AAPL" o "BTC") y ve una preview cuántica.</p>
-        <input type="text" id="searchInput" placeholder="Ingresa un activo o estrategia...">
-        <button id="searchBtn" onclick="performSearch()">Simular</button>
-        <div id="searchResults">
-            <p>Resultados mock: Para "AAPL", optimización cuántica sugiere +15% en cartera diversificada. ¡Detalles en beta!</p>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Análisis de Riesgo</h3>
+                    <p>Prevé el caos con precisión.</p>
+                </div>
+                <div class="card-back">
+                    <h3>Detalles</h3>
+                    <p>Entrelazamiento cuántico para un análisis de riesgos que trasciende el tiempo.</p>
+                </div>
+            </div>
         </div>
-    </section>
-
-    <section id="contact">
-        <h2>Únete como Early Adopter</h2>
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST"> <!-- Reemplaza con tu Formspree ID -->
-            <input type="email" name="email" placeholder="Tu email" required style="padding:1rem; width:100%; margin:1rem 0; border-radius:5px; background:transparent; border:1px solid #8b5cf6; color:#fff;">
-            <button type="submit" class="cta" style="width:100%;">Regístrate Gratis</button>
-        </form>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Simulawant. Todos los derechos reservados. | Dominios: simulawant.com/es/me/net/online/store</p>
-    </footer>
-
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Portafolio Dinámico</h3>
+                    <p>Evoluciona con el cosmos.</p>
+                </div>
+                <div class="card-back">
+                    <h3>Detalles</h3>
+                    <p>Ajustes en tiempo real guiados por la mecánica cuántica pura.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cta" id="contact">
+        <button onclick="window.location.href='#contact'">Domina el Futuro</button>
+    </div>
     <script>
-        function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
-        function performSearch() {
-            const input = document.getElementById('searchInput').value;
-            const results = document.getElementById('searchResults');
-            if (input) {
-                results.innerHTML = `<p>Simulando "${input}"... Optimización cuántica: +12-18% rendimiento esperado. ¡Beta pronto!</p>`;
-                results.style.display = 'block';
-            } else {
-                alert('Ingresa un activo para simular.');
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const numParticles = 150;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1.5 - 0.75;
+                this.speedY = Math.random() * 1.5 - 0.75;
+                this.color = Math.random() > 0.5 ? '#c0c0c0' : '#ffff00';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+                this.size = Math.max(0.5, this.size + Math.sin(Date.now() * 0.001) * 0.05);
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); scrollToSection(this.getAttribute('href').slice(1));
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    const dist = Math.hypot(particles[a].x - particles[b].x, particles[a].y - particles[b].y);
+                    if (dist < 150) {
+                        const gradient = ctx.createLinearGradient(particles[a].x, particles[a].y, particles[b].x, particles[b].y);
+                        gradient.addColorStop(0, particles[a].color);
+                        gradient.addColorStop(1, particles[b].color);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - dist / 150})`;
+                        ctx.lineWidth = 0.7 + (1 - dist / 150) * 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            const header = document.querySelector('.header');
+            const rect = header.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const mouseX = e.clientX - rect.left - centerX;
+            const mouseY = e.clientY - rect.top - centerY;
+            header.style.transform = `perspective(1000px) translateZ(0) rotateX(${mouseY / 100}deg) rotateY(${mouseX / 100}deg)`;
+        });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.transform = `rotateX(${y / 15}deg) rotateY(${-x / 15}deg) scale(1.15) translateZ(20px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg) scale(1) translateZ(0)`;
             });
         });
+
+        animate();
     </script>
 </body>
 </html>
