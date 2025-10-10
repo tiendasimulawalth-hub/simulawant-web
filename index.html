@@ -3,332 +3,1424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum-Finance Hub</title>
+    <title>Quantum-Finance Hub | Inversión Cuántica Democratizada</title>
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
-            position: relative;
-            height: 100vh;
-            transition: filter 0.5s;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            padding: 0;
+            box-sizing: border-box;
         }
-        canvas {
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            z-index: 0;
+            animation: gradientShift 15s ease infinite;
         }
-        .header {
-            text-align: center;
-            padding: 150px 20px 80px;
-            position: relative;
-            z-index: 1;
-            transform: perspective(1000px);
-            transition: transform 0.5s;
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
-        .header h1 {
-            font-size: 5em;
-            margin: 0;
-            text-shadow: 0 0 10px #c0c0c0, 0 0 20px #ffff00;
-            animation: electricGlow 1.5s infinite alternate;
-            font-family: 'Impact', sans-serif;
-            letter-spacing: 2px;
-            color: transparent;
-            background: linear-gradient(45deg, #c0c0c0, #ffff00, #00ffcc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
-            -webkit-font-smoothing: antialiased;
-            backface-visibility: hidden;
-            will-change: opacity;
-            display: inline-block;
-        }
-        .header p {
-            font-size: 1.8em;
-            max-width: 800px;
-            margin: 30px auto;
-            opacity: 0;
-            animation: slideUpFade 2s ease forwards 0.7s;
-        }
-        .nav {
+
+        /* Floating particles */
+        .particle {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            display: flex;
-            gap: 20px;
+            width: 3px;
+            height: 3px;
+            background: rgba(168, 85, 247, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
         }
-        .nav a {
-            color: #c0c0c0;
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            font-size: 1.2em;
-            transition: color 0.3s, text-shadow 0.3s, transform 0.3s;
-            padding: 5px 15px;
-            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
         }
-        .nav a:hover {
-            color: #ffff00;
-            text-shadow: 0 0 15px #ffff00;
-            transform: scale(1.1);
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #a855f7, #6366f1);
+            transition: width 0.3s;
         }
-        .content {
+
+        .nav-links a:hover {
+            color: #a855f7;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            padding: 0.7rem 1.5rem !important;
+            border-radius: 8px;
+            color: white !important;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(124, 58, 237, 0.6);
+        }
+
+        .nav-cta::after {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 3rem 4rem;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #c084fc;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #c084fc 50%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            letter-spacing: -2px;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-            min-height: 70vh;
-            perspective: 1000px;
+            animation: fadeInUp 1s ease-out 0.6s both;
         }
-        .card {
-            background: linear-gradient(135deg, rgba(192, 192, 192, 0.2), rgba(255, 255, 0, 0.1));
-            border: 3px solid #c0c0c0;
-            border-radius: 25px;
-            padding: 30px;
-            margin: 20px;
-            width: 300px;
-            text-align: center;
-            transition: transform 0.6s ease, box-shadow 0.6s ease;
+
+        .btn-primary, .btn-secondary {
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
             cursor: pointer;
-            perspective: 1000px;
-            transform: rotateX(0deg) rotateY(0deg) translateZ(0);
-            box-shadow: 0 5px 15px rgba(192, 192, 192, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .card:hover {
-            transform: rotateX(15deg) rotateY(15deg) scale(1.15) translateZ(20px);
-            box-shadow: 0 15px 50px rgba(255, 255, 0, 0.6), 0 0 30px rgba(0, 255, 204, 0.6);
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: white;
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.5);
         }
-        .card-inner {
-            transition: transform 1s;
-            transform-style: preserve-3d;
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 60px rgba(124, 58, 237, 0.7);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(168, 85, 247, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Trust Indicators */
+        .trust-bar {
             position: relative;
-            width: 100%;
-            height: 100%;
+            z-index: 10;
+            max-width: 1200px;
+            margin: -2rem auto 4rem;
+            padding: 0 3rem;
+            text-align: center;
         }
-        .card:hover .card-inner {
-            transform: rotateY(180deg);
+
+        .trust-bar p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .card-front, .card-back {
-            backface-visibility: hidden;
+
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            opacity: 0.6;
+        }
+
+        .trust-logos span {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Stats Section */
+        .stats {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto 8rem;
+            padding: 0 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            background: rgba(10, 10, 10, 0.9);
-            border-radius: 20px;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
-        .card-back {
-            transform: rotateY(180deg);
-            background: linear-gradient(135deg, rgba(192, 192, 192, 0.1), rgba(10, 10, 50, 0.9));
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
         }
-        .card h3 {
-            margin: 0 0 20px;
-            color: #ffff00;
-            font-size: 1.4em;
-            text-transform: uppercase;
+
+        .stat-card:hover::before {
+            opacity: 1;
         }
-        .card p {
-            font-size: 1em;
-            color: #ddd;
-            line-height: 1.5;
-        }
-        .cta {
-            text-align: center;
-            padding: 80px 20px;
+
+        .stat-number {
             position: relative;
-            z-index: 1;
-            animation: float 3s infinite ease-in-out;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
         }
-        .cta button {
-            background: linear-gradient(45deg, #c0c0c0, #ffff00, #00ffcc);
-            border: none;
-            color: #0a0a0a;
-            padding: 20px 50px;
-            font-size: 1.5em;
+
+        .stat-label {
+            position: relative;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Section Styling */
+        .section {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 3rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            padding: 0.5rem 1.2rem;
             border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #c084fc;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 25px 70px rgba(124, 58, 237, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(79, 70, 229, 0.2) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .feature-title {
+            position: relative;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .feature-description {
+            position: relative;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* How It Works */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.5);
+        }
+
+        .process-step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .process-step p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Demo Interactive */
+        .demo-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 4rem;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(79, 70, 229, 0.05) 100%);
+        }
+
+        .demo-visual {
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 4rem;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .quantum-simulation {
+            position: relative;
+            width: 250px;
+            height: 250px;
+        }
+
+        .quantum-circle {
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(168, 85, 247, 0.5);
+            border-radius: 50%;
+            position: absolute;
+            animation: rotate 15s linear infinite;
+        }
+
+        .quantum-circle:nth-child(2) {
+            animation-duration: 20s;
+            animation-direction: reverse;
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .quantum-dot {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.8);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .dot-1 { top: 0; left: 50%; transform: translate(-50%, -50%); }
+        .dot-2 { bottom: 0; left: 50%; transform: translate(-50%, 50%); animation-delay: 0.5s; }
+        .dot-3 { left: 0; top: 50%; transform: translate(-50%, -50%); animation-delay: 1s; }
+        .dot-4 { right: 0; top: 50%; transform: translate(50%, -50%); animation-delay: 1.5s; }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+        }
+
+        .demo-stats {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .demo-stat {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .demo-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .demo-stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.5rem;
+        }
+
+        /* Technology Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s;
+        }
+
+        .tech-badge:hover {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.5);
+            transform: translateY(-5px);
+        }
+
+        /* Social Proof */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Early Access Form */
+        .form-section {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%);
+            border-radius: 30px;
+            padding: 5rem 3rem;
+            margin-top: 4rem;
+            text-align: center;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 3rem auto 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #a855f7;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1);
+        }
+
+        .form-group select {
             cursor: pointer;
-            transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
-            font-weight: bold;
-            text-shadow: 0 0 5px #fff;
         }
-        .cta button:hover {
-            transform: scale(1.15) rotate(5deg);
-            box-shadow: 0 0 40px #ffff00, 0 0 80px #00ffcc;
-            background: linear-gradient(45deg, #ffff00, #c0c0c0, #00ffcc);
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.3rem;
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4);
         }
-        @keyframes electricGlow {
-            from { text-shadow: 0 0 10px #c0c0c0, 0 0 20px #ffff00; }
-            to { text-shadow: 0 0 30px #c0c0c0, 0 0 50px #ffff00; }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 60px rgba(124, 58, 237, 0.6);
         }
-        @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(70px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .form-note {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 5rem 3rem 2rem;
+            margin-top: 8rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 350px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: rgba(168, 85, 247, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .footer-section a:hover {
+            color: #a855f7;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: #a855f7;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1.2rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .stats, .trust-bar {
+                padding: 0 1.5rem;
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .demo-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .demo-visual {
+                padding: 2rem 1rem;
+                min-height: 350px;
+            }
+
+            .quantum-simulation {
+                width: 200px;
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
-    <canvas id="particles"></canvas>
-    <div class="nav">
-        <a href="#home">Inicio</a>
-        <a href="#services">Servicios</a>
-        <a href="#contact">Contacto</a>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">⚛️ Quantum-Finance Hub</div>
+            <ul class="nav-links">
+                <li><a href="#features">Características</a></li>
+                <li><a href="#how-it-works">Cómo Funciona</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#technology">Tecnología</a></li>
+                <li><a href="#access" class="nav-cta">Acceso Anticipado</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🚀 Beta Privada Abierta • Plazas Limitadas</div>
+            <h1>El Futuro de las Inversiones es Cuántico</h1>
+            <p class="subtitle">Democratizamos la tecnología cuántica para que inversores minoristas accedan a estrategias financieras de nivel institucional impulsadas por IA avanzada y simulación cuántica</p>
+            <div class="cta-group">
+                <a href="#access" class="btn-primary">Obtener Acceso Anticipado →</a>
+                <a href="#demo" class="btn-secondary">Ver Demo en Vivo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+        <p>Tecnología Respaldada Por</p>
+        <div class="trust-logos">
+            <span>IBM Quantum</span>
+            <span>Google Cirq</span>
+            <span>TensorFlow</span>
+            <span>Interactive Brokers</span>
+        </div>
     </div>
-    <div class="header" id="home">
-        <h1>Quantum-Finance Hub</h1>
-        <p>Conquista el infinito financiero con la fuerza cuántica que redefine el destino de tu riqueza.</p>
+
+    <!-- Stats Section -->
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number">10X</div>
+            <div class="stat-label">Precisión vs Métodos Tradicionales</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">1M+</div>
+            <div class="stat-label">Escenarios Simulados/Segundo</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Activos Monitoreados en Tiempo Real</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Análisis Continuo del Mercado</div>
+        </div>
     </div>
-    <div class="content" id="services">
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <h3>Inversiones Cuánticas</h3>
-                    <p>Viaja por universos de rentabilidad.</p>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="section-header">
+            <div class="section-tag">💎 Ventajas Competitivas</div>
+            <h2 class="section-title">Tecnología Cuántica al Alcance de Todos</h2>
+            <p class="section-subtitle">Combinamos física cuántica, inteligencia artificial y finanzas conductuales para crear la herramienta de inversión más avanzada del mercado</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚛️</div>
+                <h3 class="feature-title">Simulación Cuántica</h3>
+                <p class="feature-description">Utilizamos algoritmos de computación cuántica (Qiskit, Cirq) para analizar millones de escenarios de mercado simultáneamente. El algoritmo de Grover encuentra oportunidades ocultas que los sistemas tradicionales no pueden detectar.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">IA Predictiva Avanzada</h3>
+                <p class="feature-description">Redes neuronales profundas analizan patrones históricos, tendencias macroeconómicas y análisis de sentimiento en tiempo real de redes sociales y noticias para predecir movimientos del mercado con precisión sin precedentes.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3 class="feature-title">Personalización Total</h3>
+                <p class="feature-description">Tu perfil de riesgo, valores éticos, objetivos financieros y comportamiento de inversión guían cada recomendación. Finanzas conductuales aplicadas: entendemos tu psicología como inversor.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Seguridad Institucional</h3>
+                <p class="feature-description">Encriptación de grado militar, cumplimiento regulatorio completo (SEC, FINRA), auditorías independientes trimestrales y certificación ISO 27001. Tus datos e inversiones están protegidos al máximo nivel.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Ejecución Instantánea</h3>
+                <p class="feature-description">APIs directas con Interactive Brokers, Coinbase y TD Ameritrade. Cuando detectamos una oportunidad, la ejecutamos en milisegundos antes que el mercado se mueva.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Transparencia Absoluta</h3>
+                <p class="feature-description">Visualizaciones intuitivas explican cada decisión. No hay cajas negras: sabes exactamente por qué recomendamos cada movimiento, con métricas de confianza y análisis de riesgo detallado.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section" id="how-it-works">
+        <div class="section-header">
+            <div class="section-tag">🔬 Metodología</div>
+            <h2 class="section-title">Cómo Funciona la Magia Cuántica</h2>
+            <p class="section-subtitle">Un proceso científico de 4 pasos que transforma datos en decisiones de inversión ganadoras</p>
+        </div>
+
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="process-number">1</div>
+                <h3>Recopilación Masiva</h3>
+                <p>Ingesta en tiempo real de datos de mercado, noticias, redes sociales, indicadores macroeconómicos y blockchain. Más de 10TB de datos procesados diariamente.</p>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">2</div>
+                <h3>Simulación Cuántica</h3>
+                <p>Algoritmos cuánticos evalúan millones de escenarios "qué pasaría si" simultáneamente, identificando las trayectorias óptimas para tu cartera en todos los futuros posibles.</p>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">3</div>
+                <h3>Análisis Conductual</h3>
+                <p>IA estudia tu comportamiento, tolerancia al riesgo y sesgos cognitivos para personalizar estrategias que se alineen con tu psicología de inversión única.</p>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">4</div>
+                <h3>Ejecución Inteligente</h3>
+                <p>Órdenes ejecutadas automáticamente en el momento óptimo, con gestión de riesgo activa y rebalanceo continuo. Tú decides si quieres modo automático o aprobación manual.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="section" id="demo">
+        <div class="section-header">
+            <div class="section-tag">🎯 Demo en Vivo</div>
+            <h2 class="section-title">Simulación Cuántica en Acción</h2>
+            <p class="section-subtitle">Observa en tiempo real cómo nuestros algoritmos cuánticos optimizan carteras</p>
+        </div>
+
+        <div class="demo-container">
+            <div class="demo-visual">
+                <div class="quantum-simulation">
+                    <div class="quantum-circle">
+                        <div class="quantum-dot dot-1"></div>
+                        <div class="quantum-dot dot-2"></div>
+                        <div class="quantum-dot dot-3"></div>
+                        <div class="quantum-dot dot-4"></div>
+                    </div>
+                    <div class="quantum-circle"></div>
                 </div>
-                <div class="card-back">
-                    <h3>Detalles</h3>
-                    <p>Simulaciones cuánticas multidimensionales que optimizan tu portafolio en paralelo.</p>
+
+                <div class="demo-stats">
+                    <div class="demo-stat">
+                        <div class="demo-stat-value">1,048,576</div>
+                        <div class="demo-stat-label">Escenarios Simulados</div>
+                    </div>
+                    <div class="demo-stat">
+                        <div class="demo-stat-value">0.7ms</div>
+                        <div class="demo-stat-label">Tiempo de Cómputo</div>
+                    </div>
+                    <div class="demo-stat">
+                        <div class="demo-stat-value">94.3%</div>
+                        <div class="demo-stat-label">Nivel de Confianza</div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <h3>Análisis de Riesgo</h3>
-                    <p>Prevé el caos con precisión.</p>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="section" id="technology">
+        <div class="section-header">
+            <div class="section-tag">⚙️ Stack Tecnológico</div>
+            <h2 class="section-title">Construido Sobre Gigantes</h2>
+            <p class="section-subtitle">Las tecnologías más avanzadas del mundo unificadas en una sola plataforma</p>
+        </div>
+
+        <div class="tech-grid">
+            <div class="tech-badge">IBM Qiskit</div>
+            <div class="tech-badge">Google Cirq</div>
+            <div class="tech-badge">TensorFlow</div>
+            <div class="tech-badge">PyTorch</div>
+            <div class="tech-badge">Apache Kafka</div>
+            <div class="tech-badge">TimeSeries DB</div>
+            <div class="tech-badge">NLP Models</div>
+            <div class="tech-badge">Blockchain</div>
+            <div class="tech-badge">REST APIs</div>
+            <div class="tech-badge">WebSockets</div>
+            <div class="tech-badge">Redis Cache</div>
+            <div class="tech-badge">PostgreSQL</div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-tag">💬 Testimonios</div>
+            <h2 class="section-title">Lo Que Dicen Nuestros Beta Testers</h2>
+            <p class="section-subtitle">Inversores reales obteniendo resultados reales</p>
+        </div>
+
+        <div class="testimonials">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"En 3 meses mi cartera subió 23% mientras el S&P apenas movió 4%. La precisión de las predicciones es aterradora. Nunca volveré a invertir sin esta herramienta."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MR</div>
+                    <div class="author-info">
+                        <h4>Miguel Rodríguez</h4>
+                        <p>Inversor Particular • Madrid</p>
+                    </div>
                 </div>
-                <div class="card-back">
-                    <h3>Detalles</h3>
-                    <p>Entrelazamiento cuántico para un análisis de riesgos que trasciende el tiempo.</p>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Como ingeniera, aprecio la transparencia. Ver exactamente cómo los algoritmos cuánticos toman decisiones me da una confianza que nunca tuve con otros robo-advisors."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AL</div>
+                    <div class="author-info">
+                        <h4>Ana López</h4>
+                        <p>Ingeniera de Software • Barcelona</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Probé todos los servicios del mercado. Quantum-Finance Hub es el único que realmente entiende MI perfil de riesgo y mis valores éticos. Es inversión personalizada de verdad."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JM</div>
+                    <div class="author-info">
+                        <h4>Javier Martínez</h4>
+                        <p>Emprendedor • Valencia</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <h3>Portafolio Dinámico</h3>
-                    <p>Evoluciona con el cosmos.</p>
-                </div>
-                <div class="card-back">
-                    <h3>Detalles</h3>
-                    <p>Ajustes en tiempo real guiados por la mecánica cuántica pura.</p>
-                </div>
+    </section>
+
+    <!-- Early Access Form -->
+    <section class="section" id="access">
+        <div class="form-section">
+            <div class="section-tag">🎁 Oferta Limitada</div>
+            <h2 class="section-title">Únete a la Revolución Cuántica</h2>
+            <p class="section-subtitle">Solo 500 plazas disponibles para early adopters. Los primeros 100 obtienen comisión 0% de por vida.</p>
+
+            <div class="form-container">
+                <form id="earlyAccessForm">
+                    <div class="form-group">
+                        <label for="name">Nombre Completo *</label>
+                        <input type="text" id="name" name="name" required placeholder="Juan Pérez">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Experiencia Invirtiendo *</label>
+                        <select id="experience" name="experience" required>
+                            <option value="">Selecciona tu nivel</option>
+                            <option value="beginner">Principiante (0-2 años)</option>
+                            <option value="intermediate">Intermedio (3-5 años)</option>
+                            <option value="advanced">Avanzado (5-10 años)</option>
+                            <option value="professional">Profesional (10+ años)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="portfolio">Tamaño de Portfolio Actual *</label>
+                        <select id="portfolio" name="portfolio" required>
+                            <option value="">Selecciona un rango</option>
+                            <option value="0-10k">€0 - €10,000</option>
+                            <option value="10k-50k">€10,000 - €50,000</option>
+                            <option value="50k-250k">€50,000 - €250,000</option>
+                            <option value="250k-1m">€250,000 - €1,000,000</option>
+                            <option value="1m+">€1,000,000+</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-btn">🚀 Solicitar Acceso Anticipado</button>
+
+                    <p class="form-note">Al registrarte, aceptas nuestros Términos de Servicio y Política de Privacidad. No compartimos tu información con terceros.</p>
+                </form>
             </div>
         </div>
-    </div>
-    <div class="cta" id="contact">
-        <button onclick="window.location.href='#contact'">Domina el Futuro</button>
-    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">⚛️ Quantum-Finance Hub</div>
+                <p>Democratizando el acceso a tecnología cuántica para inversores de todo el mundo. El futuro de las finanzas ya está aquí.</p>
+                <div class="social-links">
+                    <a href="#" title="Twitter">𝕏</a>
+                    <a href="#" title="LinkedIn">in</a>
+                    <a href="#" title="GitHub">⚡</a>
+                    <a href="#" title="Discord">💬</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Producto</h3>
+                <ul>
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="#technology">Tecnología</a></li>
+                    <li><a href="#">Precios</a></li>
+                    <li><a href="#">Roadmap</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Compañía</h3>
+                <ul>
+                    <li><a href="#">Sobre Nosotros</a></li>
+                    <li><a href="#">Equipo</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Carreras</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Términos de Servicio</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Cumplimiento</a></li>
+                    <li><a href="#">Seguridad</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Quantum-Finance Hub. Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="#">Términos</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 2rem; color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; max-width: 1000px; margin-left: auto; margin-right: auto;">
+            ⚠️ Aviso Legal: Las inversiones conllevan riesgos. El rendimiento pasado no garantiza resultados futuros. Nuestras recomendaciones no constituyen asesoramiento financiero personalizado. Consulta con un profesional certificado antes de tomar decisiones de inversión.
+        </p>
+    </footer>
+
     <script>
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const particles = [];
-        const numParticles = 150;
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 1.5 - 0.75;
-                this.speedY = Math.random() * 1.5 - 0.75;
-                this.color = Math.random() > 0.5 ? '#c0c0c0' : '#ffff00';
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-                this.size = Math.max(0.5, this.size + Math.sin(Date.now() * 0.001) * 0.05);
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 50;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animation = `float ${15 + Math.random() * 15}s linear infinite`;
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                document.body.appendChild(particle);
             }
         }
 
-        for (let i = 0; i < numParticles; i++) {
-            particles.push(new Particle());
-        }
+        // Navbar scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            connectParticles();
-            requestAnimationFrame(animate);
-        }
-
-        function connectParticles() {
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    const dist = Math.hypot(particles[a].x - particles[b].x, particles[a].y - particles[b].y);
-                    if (dist < 150) {
-                        const gradient = ctx.createLinearGradient(particles[a].x, particles[a].y, particles[b].x, particles[b].y);
-                        gradient.addColorStop(0, particles[a].color);
-                        gradient.addColorStop(1, particles[b].color);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - dist / 150})`;
-                        ctx.lineWidth = 0.7 + (1 - dist / 150) * 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                    }
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-            }
-        }
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            const header = document.querySelector('.header');
-            const rect = header.getBoundingClientRect();
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const mouseX = e.clientX - rect.left - centerX;
-            const mouseY = e.clientY - rect.top - centerY;
-            header.style.transform = `perspective(1000px) translateZ(0) rotateX(${mouseY / 100}deg) rotateY(${mouseX / 100}deg)`;
-        });
-
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                card.style.transform = `rotateX(${y / 15}deg) rotateY(${-x / 15}deg) scale(1.15) translateZ(20px)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `rotateX(0deg) rotateY(0deg) scale(1) translateZ(0)`;
             });
         });
 
-        animate();
+        // Form submission
+        document.getElementById('earlyAccessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                experience: document.getElementById('experience').value,
+                portfolio: document.getElementById('portfolio').value
+            };
+            
+            // Store in memory (you would send this to your backend)
+            console.log('Form submitted:', formData);
+            
+            // Show success message
+            alert('¡Gracias! Te hemos añadido a la lista de espera. Recibirás un email en las próximas 48 horas con instrucciones para acceder a la beta privada.');
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Initialize particles
+        createParticles();
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.feature-card, .stat-card, .testimonial-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
