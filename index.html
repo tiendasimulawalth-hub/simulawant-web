@@ -583,8 +583,11 @@
             <div class="access-container">
                 <h2 class="section-title">Acceso Beta Limitado</h2>
                 <p>Estamos seleccionando un grupo reducido de usuarios para nuestra fase beta privada. Serás de los primeros en probar una tecnología que está redefiniendo el análisis financiero.</p>
-                <form class="access-form" onsubmit="handleSubmit(event)">
-                    <input type="email" placeholder="tu@email.com" required aria-label="Email para acceso beta">
+                <form class="access-form" action="https://simulawant.us10.list-manage.com/subscribe/post?u=2154c12e80c047101c489f284&amp;id=b3cb1c5aa8&amp;f_id=00bac7e5f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+                    <input type="email" name="EMAIL" placeholder="tu@email.com" required aria-label="Email para acceso beta">
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                        <input type="text" name="b_2154c12e80c047101c489f284_b3cb1c5aa8" tabindex="-1" value="">
+                    </div>
                     <button type="submit" class="btn btn-primary">Solicitar Acceso</button>
                 </form>
             </div>
@@ -732,14 +735,6 @@
         
         animate();
         
-        function handleSubmit(e) {
-            e.preventDefault();
-            const email = e.target.querySelector('input').value;
-            
-            alert(`✅ ¡Solicitud recibida con éxito!\n\n📧 Email: ${email}\n\nTe contactaremos en las próximas 48-72 horas con instrucciones de acceso al beta privado.\n\nGracias por tu interés en Quantum-Finance Hub.`);
-            e.target.reset();
-        }
-        
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -771,3 +766,4 @@
     </script>
 </body>
 </html>
+        
