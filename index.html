@@ -176,21 +176,29 @@
         .beta-badge {
             background: linear-gradient(135deg, #ffd700, #ffed4e);
             color: #050811;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             display: inline-block;
-            margin-top: 20px;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+            margin-top: 30px;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
             animation: pulse 2s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
         }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+            }
+            50% { 
+                transform: scale(1.08); 
+                box-shadow: 0 12px 35px rgba(255, 215, 0, 0.7);
+            }
         }
         
         .features {
@@ -766,4 +774,3 @@
     </script>
 </body>
 </html>
-        
